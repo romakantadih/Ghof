@@ -3,69 +3,328 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Happy Birthday Ghofrane — from romankanta</title>
+  <title>Happy Birthday Ghofrane</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     :root{
-      --bg1: #ff7eb3;
-      --bg2: #7afcff;
-      --glass: rgba(255,255,255,0.14);
-      --glass-hover: rgba(255,255,255,0.28);
-      --text: #102027;
-      --accent: #fff7fb;
-      --btn-color: rgba(255,255,255,0.12);
+      --bg1: #6a5acd;
+      --bg2: #4a90e2;
+      --glass: rgba(255,255,255,0.12);
+      --glass-hover: rgba(255,255,255,0.25);
+      --text: #ffffff;
+      --accent: rgba(255,255,255,0.85);
     }
     *{box-sizing:border-box}
     html,body{height:100%}
     body {
-      margin:0; padding:0;
+      margin: 0;
+      padding: 0;
       font-family: 'Poppins', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
       background: linear-gradient(135deg,var(--bg1),var(--bg2));
-      color: var(--accent);
+      color: var(--text);
       -webkit-font-smoothing:antialiased;
       -moz-osx-font-smoothing:grayscale;
+      overflow: hidden;
       min-height:100vh;
-      overflow:hidden;
+    }
+    .container{
+      height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
+      position:relative;
+    }
+    .card {
+      width:100%;
+      max-width:880px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.02));
+      border-radius:18px;
+      padding:34px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+      backdrop-filter: blur(6px);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .page {
+      display:none;
+      width:100%;
+      flex-direction:column;
+      align-items:center;
+      text-align:center;
+      animation:fade 0.6s ease;
+      gap:6px;
+    }
+    @keyframes fade {
+      from { opacity:0; transform: translateY(12px); }
+      to { opacity:1; transform: translateY(0); }
+    }
+    .active { display:flex; }
+    .emoji { font-size:3rem; margin-bottom:10px; }
+    h1 {
+      margin:8px 0;
+      font-size: clamp(1.6rem, 3.2vw, 2.4rem);
+      line-height:1.05;
+      color: var(--accent);
+    }
+    p {
+      max-width:820px;
+      font-size: clamp(0.98rem, 1.6vw, 1.12rem);
+      color: rgba(255,255,255,0.95);
+      line-height:1.6;
+      margin:0;
+    }
+    .btn {
+      margin-top:20px;
+      background: var(--glass);
+      padding:12px 26px;
+      border-radius:12px;
+      color:var(--text);
+      font-weight:600;
+      cursor:pointer;
+      border: none;
+      transition: background 180ms ease, transform 120ms ease;
+      outline: none;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+    }
+    .btn:hover{ background: var(--glass-hover); transform: translateY(-3px); }
+    .btn:active{ transform: translateY(-1px); }
+    .btn[aria-pressed="true"]{ box-shadow: inset 0 -3px 0 rgba(0,0,0,0.08); }
+
+    /* small controls */
+    .controls {
+      position: absolute;
+      right: 18px;
+      top: 18px;
+      display:flex;
+      gap:10px;
+      align-items:center;
+    }
+    .icon-btn {
+      background:rgba(255,255,255,0.06);
+      border-radius:10px;
+      padding:8px;
+      border:none;
+      color:var(--text);
+      cursor:pointer;
     }
 
-    /* SVG tiled kawaii cats as background (data URI) */
-    :root {
-      --kawaii-svg: url("data:image/svg+xml;utf8,\
-        <svg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'>\
-        <defs>\
-          <style> .c{fill:%23ffffff;stroke:%23000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round} .b{fill:%23ff8fb3} .o{fill:%23ffd36a} </style>\
-        </defs>\
-        <rect width='160' height='160' fill='none'/>\
-        <!-- repeat tile: four small cats in corners -->\
-        <g transform='translate(20,20)'>\
-          <g transform='scale(0.7)'>\
-            <path class='c' d='M20 10c-6 0-10 5-10 11s4 11 10 11c6 0 10-5 10-11s-4-11-10-11z'/>\
-            <path class='c' d='M7 6c2-3 6-4 10-3 5 2 8 6 7 10'/>\
-            <circle class='c' cx='16' cy='18' r='2'/>\
-            <circle class='c' cx='26' cy='18' r='2'/>\
-            <ellipse class='o' cx='21' cy='25' rx='3' ry='2'/>\
-            <path class='b' d='M28 7c0 5-4 8-8 8s-8-3-8-8c0-2 2-4 4-4 2-1 4-1 6 0 2 0 6 2 6 4z'/>\
-          </g>\
-        </g>\
-        <g transform='translate(100,20) scale(0.8)'>\
-          <path class='c' d='M20 10c-6 0-10 5-10 11s4 11 10 11c6 0 10-5 10-11s-4-11-10-11z'/>\
-          <circle class='c' cx='16' cy='18' r='2'/>\
-          <circle class='c' cx='26' cy='18' r='2'/>\
-          <ellipse class='o' cx='21' cy='25' rx='3' ry='2'/>\
-          <path class='b' d='M28 7c0 5-4 8-8 8s-8-3-8-8c0-2 2-4 4-4 2-1 4-1 6 0 2 0 6 2 6 4z'/>\
-        </g>\
-        <g transform='translate(20,100) scale(0.75)'>\
-          <path class='c' d='M20 10c-6 0-10 5-10 11s4 11 10 11c6 0 10-5 10-11s-4-11-10-11z'/>\
-          <circle class='c' cx='16' cy='18' r='2'/>\
-          <circle class='c' cx='26' cy='18' r='2'/>\
-          <ellipse class='o' cx='21' cy='25' rx='3' ry='2'/>\
-          <path class='b' d='M28 7c0 5-4 8-8 8s-8-3-8-8c0-2 2-4 4-4 2-1 4-1 6 0 2 0 6 2 6 4z'/>\
-        </g>\
-        <g transform='translate(100,100) scale(0.7)'>\
-          <path class='c' d='M20 10c-6 0-10 5-10 11s4 11 10 11c6 0 10-5 10-11s-4-11-10-11z'/>\
-          <circle class='c' cx='16' cy='18' r='2'/>\
-          <circle class='c' cx='26' cy='18' r='2'/>\
-          <ellipse class='o' cx='21' cy='25' rx='3' ry='2'/>\
-          <path class='b' d='M28 7c0 5-4 8-8 8s-8-3-8-8c0-2 2-4 4-4 2-1 4-1 6 0 2 0 6 2 6 4z'/>\
-        </g>\
-          </svg>
+    /* progress dots */
+    .dots {
+      display:flex;
+      gap:8px;
+      margin-top:18px;
+    }
+    .dot {
+      width:10px; height:10px; border-radius:50%;
+      background: rgba(255,255,255,0.18);
+    }
+    .dot.active { background: rgba(255,255,255,0.95); width:14px; height:10px; border-radius:10px; }
+
+    /* play overlay (shown if autoplay blocked) */
+    .play-overlay {
+      position: absolute;
+      inset: 0;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      pointer-events:none;
+    }
+    .play-overlay .play-btn {
+      pointer-events:auto;
+      background: linear-gradient(90deg, rgba(255,255,255,0.1), rgba(255,255,255,0.06));
+      border: none;
+      color: white;
+      padding:14px 20px;
+      border-radius:40px;
+      font-weight:700;
+      backdrop-filter: blur(4px);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+    }
+
+    /* responsive */
+    @media (max-width:540px){
+      .card { padding:22px; border-radius:14px; }
+      .emoji { font-size:2.6rem; }
+      .btn{ padding:10px 18px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container" role="application" aria-label="Birthday card">
+    <div class="card">
+      <!-- Pages -->
+      <section class="page active" id="page1" aria-labelledby="p1title" tabindex="0">
+        <div class="emoji" aria-hidden="true">💙💜</div>
+        <h1 id="p1title">Happy Birthday, Ghofrane</h1>
+        <p>Today’s your day, so I made something small but special for you.</p>
+        <button class="btn" id="openBtn" onclick="startExperience()" aria-label="Open the card">Open</button>
+        <div class="dots" aria-hidden="true">
+          <span class="dot active"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        </div>
+      </section>
+
+      <section class="page" id="page2" aria-labelledby="p2title" tabindex="0">
+        <div class="emoji" aria-hidden="true">🍕🌮🏀</div>
+        <h1 id="p2title">Little Things About You</h1>
+        <p>You love food more than anything (except vegetables 😭). Pizza is your forever favourite, tacos are your weakness, and you still find time to hoop and be good at studying.</p>
+        <button class="btn" onclick="nextPage()" aria-label="Next">Next</button>
+        <div class="dots" aria-hidden="true">
+          <span class="dot"></span><span class="dot active"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span>
+        </div>
+      </section>
+
+      <section class="page" id="page3" aria-labelledby="p3title" tabindex="0">
+        <div class="emoji" aria-hidden="true">📘✨</div>
+        <h1 id="p3title">Your Talent</h1>
+        <p>You casually got 20/20 in math. Not many people do that. You’re genuinely gifted, even when you don’t try.</p>
+        <button class="btn" onclick="nextPage()" aria-label="Next">Next</button>
+        <div class="dots" aria-hidden="true">
+          <span class="dot"></span><span class="dot"></span><span class="dot active"></span><span class="dot"></span><span class="dot"></span>
+        </div>
+      </section>
+
+      <section class="page" id="page4" aria-labelledby="p4title" tabindex="0">
+        <div class="emoji" aria-hidden="true">💫💙</div>
+        <h1 id="p4title">A Soft Message</h1>
+        <p>You have this calm, comforting vibe that makes everything lighter. Anyone who knows you is lucky — even in small moments.</p>
+        <button class="btn" onclick="nextPage()" aria-label="Next">Next</button>
+        <div class="dots" aria-hidden="true">
+          <span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot active"></span><span class="dot"></span>
+        </div>
+      </section>
+
+      <section class="page" id="page5" aria-labelledby="p5title" tabindex="0">
+        <div class="emoji" aria-hidden="true">🎂💜</div>
+        <h1 id="p5title">For You</h1>
+        <p>
+          I just wanted to wish you a peaceful and happy birthday.<br><br>
+          Even though things aren’t the same between us anymore, I still appreciate the moments and conversations we shared — they meant something to me.<br><br>
+          You’ve always had this calm, genuine energy that made things feel lighter. I hope today you feel celebrated and peaceful. Happy birthday, Ghofrane.
+        </p>
+        <button class="btn" onclick="restart()" aria-label="Finish and restart">Close</button>
+        <div class="dots" aria-hidden="true">
+          <span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="dot active"></span>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Controls -->
+    <div class="controls" aria-hidden="false">
+      <button id="playToggle" class="icon-btn" title="Play / Pause music" aria-pressed="false" onclick="togglePlay()" aria-label="Play or pause music">►</button>
+    </div>
+
+    <!-- Play overlay (hidden by default) -->
+    <div class="play-overlay" id="overlay" style="display:none">
+      <button class="play-btn" id="overlayPlay" onclick="overlayPlay()" aria-label="Play music">Play music & continue</button>
+    </div>
+
+  </div>
+
+  <!-- audio -->
+  <audio id="music" src="https://drive.google.com/file/d/1sXVzxUWMh_TLObJdPlsBhTFqW_Y-1Sgy/view?usp=drivesdk" preload="auto"></audio>
+
+  <script>
+    // Page management
+    const pages = Array.from(document.querySelectorAll('.page'));
+    const dots = Array.from(document.querySelectorAll('.dot'));
+    let current = 0;
+    const audio = document.getElementById('music');
+    const playToggleBtn = document.getElementById('playToggle');
+    const overlay = document.getElementById('overlay');
+    const openBtn = document.getElementById('openBtn');
+
+    function showPage(index){
+      pages.forEach((p,i)=>{
+        p.classList.toggle('active', i===index);
+        if(i===index){ p.focus({preventScroll:true}); }
+      });
+      dots.forEach((d,i)=> d.classList.toggle('active', i===index));
+      current = index;
+      updatePlayButton();
+    }
+
+    function nextPage(){
+      const next = Math.min(pages.length-1, current+1);
+      showPage(next);
+    }
+
+    function restart(){
+      showPage(0);
+      try { audio.currentTime = 0; } catch(e){}
+    }
+
+    // Try to start music and proceed to next page when user clicks Open
+    function startExperience(){
+      // switch to next page immediately
+      nextPage();
+      // attempt to play audio (some browsers block autoplay)
+      audio.play().then(()=>{
+        updatePlayButton();
+      }).catch((err)=>{
+        // show overlay prompting user to play
+        overlay.style.display = 'flex';
+      });
+    }
+
+    function overlayPlay(){
+      audio.play().then(()=> {
+        overlay.style.display = 'none';
+        updatePlayButton();
+      }).catch(()=> {
+        // still blocked — do nothing
+      });
+    }
+
+    function togglePlay(){
+      if (audio.paused){
+        audio.play().then(()=> updatePlayButton()).catch(()=>{
+          overlay.style.display = 'flex';
+        });
+      } else {
+        audio.pause();
+        updatePlayButton();
+      }
+    }
+
+    function updatePlayButton(){
+      const isPlaying = !audio.paused && !audio.ended;
+      playToggleBtn.textContent = isPlaying ? '❚❚' : '►';
+      playToggleBtn.setAttribute('aria-pressed', isPlaying ? 'true' : 'false');
+    }
+
+    // Keyboard navigation: Right = next, Left = previous, Space toggles audio when focus not on button
+    window.addEventListener('keydown', (e) => {
+      const activeTag = document.activeElement && document.activeElement.tagName.toLowerCase();
+      if (e.key === 'ArrowRight') { nextPage(); }
+      if (e.key === 'ArrowLeft') { showPage(Math.max(0, current-1)); }
+      if (e.key === ' ' && activeTag !== 'button' && activeTag !== 'a' && activeTag !== 'input') {
+        e.preventDefault();
+        togglePlay();
+      }
+    });
+
+    // Update play icon when audio state changes
+    audio.addEventListener('play', updatePlayButton);
+    audio.addEventListener('pause', updatePlayButton);
+    audio.addEventListener('ended', updatePlayButton);
+
+    // Ensure correct initial state
+    showPage(0);
+    updatePlayButton();
+
+    // Accessibility: focus first interactive when pages change
+    pages.forEach((p) => {
+      p.addEventListener('animationend', () => {
+        const btn = p.querySelector('.btn');
+        if (btn) btn.focus({preventScroll:true});
+      });
+    });
+  </script>
+</body>
+  </html>
