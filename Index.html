@@ -1,144 +1,71 @@
-# Ghof
-author-Romakanta
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Happy Birthday Ghofrane</title>
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <title>Happy Birthday Ghofrane — from romankanta</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
   <style>
     :root{
-      --bg1:#6a5acd;
-      --bg2:#4a90e2;
-      --glass:rgba(255,255,255,0.12);
-      --glass-hover:rgba(255,255,255,0.25);
-      --text:#ffffff;
-      --accent:rgba(255,255,255,0.9);
+      --bg1: #ff7eb3;
+      --bg2: #7afcff;
+      --glass: rgba(255,255,255,0.14);
+      --glass-hover: rgba(255,255,255,0.28);
+      --text: #102027;
+      --accent: #fff7fb;
+      --btn-color: rgba(255,255,255,0.12);
     }
     *{box-sizing:border-box}
     html,body{height:100%}
-    body{
-      margin:0;
-      font-family:'Poppins',system-ui;
-      background:linear-gradient(135deg,var(--bg1),var(--bg2));
-      color:var(--text);
+    body {
+      margin:0; padding:0;
+      font-family: 'Poppins', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: linear-gradient(135deg,var(--bg1),var(--bg2));
+      color: var(--accent);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      min-height:100vh;
       overflow:hidden;
     }
-    .container{
-      height:100vh;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:20px;
-    }
-    .card{
-      width:100%;
-      max-width:880px;
-      background:rgba(255,255,255,0.06);
-      border-radius:18px;
-      padding:34px;
-      backdrop-filter:blur(8px);
-      box-shadow:0 12px 30px rgba(0,0,0,0.25);
-    }
-    .page{
-      display:none;
-      flex-direction:column;
-      align-items:center;
-      text-align:center;
-      animation:fade 0.6s ease;
-    }
-    .page.active{display:flex}
-    @keyframes fade{
-      from{opacity:0;transform:translateY(15px)}
-      to{opacity:1;transform:translateY(0)}
-    }
-    .emoji{font-size:3rem;margin-bottom:10px}
-    h1{
-      margin:10px 0;
-      font-size:clamp(1.6rem,3vw,2.4rem);
-      color:var(--accent);
-    }
-    p{
-      max-width:780px;
-      line-height:1.6;
-      font-size:1.05rem;
-    }
-    .btn{
-      margin-top:22px;
-      padding:12px 26px;
-      border-radius:12px;
-      border:none;
-      background:var(--glass);
-      color:white;
-      font-weight:600;
-      cursor:pointer;
-      transition:.25s;
-    }
-    .btn:hover{background:var(--glass-hover);transform:translateY(-2px)}
-  </style>
-</head>
-<body>
 
-<div class="container">
-  <div class="card">
-    <section class="page active" id="p1">
-      <div class="emoji">💙💜</div>
-      <h1>Happy Birthday, Ghofrane</h1>
-      <p>Today’s your day, so I made something small but special for you.</p>
-      <button class="btn" onclick="next()">Open</button>
-    </section>
-    <section class="page" id="p2">
-      <div class="emoji">🍕🌮🏀</div>
-      <h1>Little Things About You</h1>
-      <p>You love food more than anything (except vegetables 😭). Pizza is your forever favourite, tacos are your weakness, and you still find time to hoop and be good at studying.</p>
-      <button class="btn" onclick="next()">Next</button>
-    </section>
-    <section class="page" id="p3">
-      <div class="emoji">📘✨</div>
-      <h1>Your Talent</h1>
-      <p>You casually got 20/20 in math. Not many people do that. You’re genuinely gifted, even when you don’t try.</p>
-      <button class="btn" onclick="next()">Next</button>
-    </section>
-    <section class="page" id="p4">
-      <div class="emoji">💫💙</div>
-      <h1>A Soft Message</h1>
-      <p>You have this calm, comforting vibe that makes everything lighter. Anyone who knows you is lucky — even in small moments.</p>
-      <button class="btn" onclick="next()">Next</button>
-    </section>
-    <section class="page" id="p5">
-      <div class="emoji">🎂💜</div>
-      <h1>For You</h1>
-      <p>
-        I just wanted to wish you a peaceful and happy birthday.<br><br>
-        Even though things aren’t the same between us anymore, I still appreciate the moments and conversations we shared — they meant something to me.<br><br>
-        You’ve always had this calm, genuine energy that made things feel lighter. I hope today you feel celebrated and peaceful.<br><br>
-        Happy Birthday, Ghofrane.
-      </p>
-      <button class="btn" onclick="restart()">Restart</button>
-    </section>
-
-  </div>
-</div>
-
-<audio id="music" src="birthday.mp3"></https://drive.google.com/file/d/1sXVzxUWMh_TLObJdPlsBhTFqW_Y-1Sgy/view?usp=drivesdk>
-
-<script>
-  const pages=document.querySelectorAll('.page');
-  let i=0;
-  function next(){
-    pages[i].classList.remove('active');
-    i=Math.min(i+1,pages.length-1);
-    pages[i].classList.add('active');
-    if(i===1) document.getElementById('music').play().catch(()=>{});
-  }
-  function restart(){
-    pages[i].classList.remove('active');
-    i=0;
-    pages[i].classList.add('active');
-  }
-</script>
-
-</body>
-</html>
+    /* SVG tiled kawaii cats as background (data URI) */
+    :root {
+      --kawaii-svg: url("data:image/svg+xml;utf8,\
+        <svg xmlns='http://www.w3.org/2000/svg' width='160' height='160' viewBox='0 0 160 160'>\
+        <defs>\
+          <style> .c{fill:%23ffffff;stroke:%23000000;stroke-width:3;stroke-linecap:round;stroke-linejoin:round} .b{fill:%23ff8fb3} .o{fill:%23ffd36a} </style>\
+        </defs>\
+        <rect width='160' height='160' fill='none'/>\
+        <!-- repeat tile: four small cats in corners -->\
+        <g transform='translate(20,20)'>\
+          <g transform='scale(0.7)'>\
+            <path class='c' d='M20 10c-6 0-10 5-10 11s4 11 10 11c6 0 10-5 10-11s-4-11-10-11z'/>\
+            <path class='c' d='M7 6c2-3 6-4 10-3 5 2 8 6 7 10'/>\
+            <circle class='c' cx='16' cy='18' r='2'/>\
+            <circle class='c' cx='26' cy='18' r='2'/>\
+            <ellipse class='o' cx='21' cy='25' rx='3' ry='2'/>\
+            <path class='b' d='M28 7c0 5-4 8-8 8s-8-3-8-8c0-2 2-4 4-4 2-1 4-1 6 0 2 0 6 2 6 4z'/>\
+          </g>\
+        </g>\
+        <g transform='translate(100,20) scale(0.8)'>\
+          <path class='c' d='M20 10c-6 0-10 5-10 11s4 11 10 11c6 0 10-5 10-11s-4-11-10-11z'/>\
+          <circle class='c' cx='16' cy='18' r='2'/>\
+          <circle class='c' cx='26' cy='18' r='2'/>\
+          <ellipse class='o' cx='21' cy='25' rx='3' ry='2'/>\
+          <path class='b' d='M28 7c0 5-4 8-8 8s-8-3-8-8c0-2 2-4 4-4 2-1 4-1 6 0 2 0 6 2 6 4z'/>\
+        </g>\
+        <g transform='translate(20,100) scale(0.75)'>\
+          <path class='c' d='M20 10c-6 0-10 5-10 11s4 11 10 11c6 0 10-5 10-11s-4-11-10-11z'/>\
+          <circle class='c' cx='16' cy='18' r='2'/>\
+          <circle class='c' cx='26' cy='18' r='2'/>\
+          <ellipse class='o' cx='21' cy='25' rx='3' ry='2'/>\
+          <path class='b' d='M28 7c0 5-4 8-8 8s-8-3-8-8c0-2 2-4 4-4 2-1 4-1 6 0 2 0 6 2 6 4z'/>\
+        </g>\
+        <g transform='translate(100,100) scale(0.7)'>\
+          <path class='c' d='M20 10c-6 0-10 5-10 11s4 11 10 11c6 0 10-5 10-11s-4-11-10-11z'/>\
+          <circle class='c' cx='16' cy='18' r='2'/>\
+          <circle class='c' cx='26' cy='18' r='2'/>\
+          <ellipse class='o' cx='21' cy='25' rx='3' ry='2'/>\
+          <path class='b' d='M28 7c0 5-4 8-8 8s-8-3-8-8c0-2 2-4 4-4 2-1 4-1 6 0 2 0 6 2 6 4z'/>\
+        </g>\
+          </svg>
