@@ -230,101 +230,152 @@
   <audio id="music" src="https://drive.google.com/file/d/1sXVzxUWMh_TLObJdPlsBhTFqW_Y-1Sgy/view?usp=drivesdk" preload="auto"></audio>
 
   <script>
-    // Page management
-    const pages = Array.from(document.querySelectorAll('.page'));
-    const dots = Array.from(document.querySelectorAll('.dot'));
-    let current = 0;
-    const audio = document.getElementById('music');
-    const playToggleBtn = document.getElementById('playToggle');
-    const overlay = document.getElementById('overlay');
-    const openBtn = document.getElementById('openBtn');
+    // Improved script — drop in for your current <script> block
 
-    function showPage(index){
-      pages.forEach((p,i)=>{
-        p.classList.toggle('active', i===index);
-        if(i===index){ p.focus({preventScroll:true}); }
-      });
-      dots.forEach((d,i)=> d.classList.toggle('active', i===index));
-      current = index;
-      updatePlayButton();
+const pages = Array.from(document.querySelectorAll('.page'));
+const dots = Array.from(document.querySelectorAll('.dot'));
+let current = 0;
+
+const audio = document.getElementById('music');           // may be null
+const playToggleBtn = document.getElementById('playToggle'); // may be null
+const overlay = document.getElementById('overlay');       // may be null
+const openBtn = document.getElementById('openBtn');       // may be null
+const overlayPlayBtn = document.getElementById('overlayPlayBtn'); // optional button inside overlay
+
+// Utility: check element is interactive (button/link/input/textarea/contenteditable/role=button)
+function isInteractiveElement(el) {
+  if (!el) return false;
+  if (el.matches('button, a, input, textarea, select')) return true;
+  if (el.getAttribute && el.getAttribute('role') === 'button') return true;
+  if (el.isContentEditable) return true;
+  return false;
+}
+
+function showPage(index) {
+  if (!pages.length) return;
+  const clamped = Math.max(0, Math.min(pages.length - 1, index));
+  pages.forEach((p, i) => {
+    p.classList.toggle('active', i === clamped);
+    // Ensure pages are focusable in HTML: <div class="page" tabindex="-1">...
+    if (i === clamped) {
+      try {
+        p.focus({ preventScroll: true });
+      } catch (e) { /* ignore if not focusable */ }
     }
+  });
+  dots.forEach((d, i) => d.classList.toggle('active', i === clamped));
+  current = clamped;
+  updatePlayButton();
+}
 
-    function nextPage(){
-      const next = Math.min(pages.length-1, current+1);
-      showPage(next);
-    }
+function nextPage() {
+  showPage(Math.min(pages.length - 1, current + 1));
+}
 
-    function restart(){
-      showPage(0);
-      try { audio.currentTime = 0; } catch(e){}
-    }
+function restart() {
+  showPage(0);
+  if (audio) {
+    try { audio.currentTime = 0; } catch (e) { /* ignore */ }
+  }
+}
 
-    // Try to start music and proceed to next page when user clicks Open
-    function startExperience(){
-      // switch to next page immediately
-      nextPage();
-      // attempt to play audio (some browsers block autoplay)
-      audio.play().then(()=>{
-        updatePlayButton();
-      }).catch((err)=>{
-        // show overlay prompting user to play
-        overlay.style.display = 'flex';
-      });
-    }
-
-    function overlayPlay(){
-      audio.play().then(()=> {
-        overlay.style.display = 'none';
-        updatePlayButton();
-      }).catch(()=> {
-        // still blocked — do nothing
-      });
-    }
-
-    function togglePlay(){
-      if (audio.paused){
-        audio.play().then(()=> updatePlayButton()).catch(()=>{
-          overlay.style.display = 'flex';
-        });
-      } else {
-        audio.pause();
-        updatePlayButton();
-      }
-    }
-
-    function updatePlayButton(){
-      const isPlaying = !audio.paused && !audio.ended;
-      playToggleBtn.textContent = isPlaying ? '❚❚' : '►';
-      playToggleBtn.setAttribute('aria-pressed', isPlaying ? 'true' : 'false');
-    }
-
-    // Keyboard navigation: Right = next, Left = previous, Space toggles audio when focus not on button
-    window.addEventListener('keydown', (e) => {
-      const activeTag = document.activeElement && document.activeElement.tagName.toLowerCase();
-      if (e.key === 'ArrowRight') { nextPage(); }
-      if (e.key === 'ArrowLeft') { showPage(Math.max(0, current-1)); }
-      if (e.key === ' ' && activeTag !== 'button' && activeTag !== 'a' && activeTag !== 'input') {
-        e.preventDefault();
-        togglePlay();
-      }
-    });
-
-    // Update play icon when audio state changes
-    audio.addEventListener('play', updatePlayButton);
-    audio.addEventListener('pause', updatePlayButton);
-    audio.addEventListener('ended', updatePlayButton);
-
-    // Ensure correct initial state
-    showPage(0);
+// Try to start music and proceed to next page when user clicks Open
+function startExperience() {
+  nextPage();
+  if (!audio) return;
+  audio.play().then(() => {
     updatePlayButton();
+  }).catch(() => {
+    if (overlay) overlay.style.display = 'flex';
+  });
+}
 
-    // Accessibility: focus first interactive when pages change
-    pages.forEach((p) => {
-      p.addEventListener('animationend', () => {
-        const btn = p.querySelector('.btn');
-        if (btn) btn.focus({preventScroll:true});
-      });
+function overlayPlay() {
+  if (!audio) return;
+  audio.play().then(() => {
+    if (overlay) overlay.style.display = 'none';
+    updatePlayButton();
+  }).catch(() => {
+    // still blocked — leave overlay visible
+  });
+}
+
+function togglePlay() {
+  if (!audio) return;
+  if (audio.paused) {
+    audio.play().then(() => updatePlayButton()).catch(() => {
+      if (overlay) overlay.style.display = 'flex';
     });
+  } else {
+    audio.pause();
+    updatePlayButton();
+  }
+}
+
+function updatePlayButton() {
+  if (!playToggleBtn || !audio) return;
+  const isPlaying = !audio.paused && !audio.ended;
+  playToggleBtn.textContent = isPlaying ? '❚❚' : '►';
+  playToggleBtn.setAttribute('aria-pressed', isPlaying ? 'true' : 'false');
+}
+
+// Keyboard navigation
+window.addEventListener('keydown', (e) => {
+  const activeEl = document.activeElement;
+  // Handle arrow keys
+  if (e.key === 'ArrowRight') {
+    nextPage();
+    return;
+  }
+  if (e.key === 'ArrowLeft') {
+    showPage(Math.max(0, current - 1));
+    return;
+  }
+
+  // Handle Space/Spacebar (many browsers expose e.code === 'Space', some old ones use 'Spacebar' or ' ')
+  const isSpaceKey = e.code === 'Space' || e.key === ' ' || e.key === 'Spacebar';
+  if (isSpaceKey) {
+    // don't toggle when focus is on interactive element
+    if (!isInteractiveElement(activeEl)) {
+      e.preventDefault();
+      togglePlay();
+    }
+  }
+});
+
+// Update play icon when audio state changes
+if (audio) {
+  audio.addEventListener('play', updatePlayButton);
+  audio.addEventListener('pause', updatePlayButton);
+  audio.addEventListener('ended', updatePlayButton);
+}
+
+// Ensure correct initial state
+showPage(0);
+updatePlayButton();
+
+// Accessibility: focus first interactive when pages change after animations end
+pages.forEach((p) => {
+  p.addEventListener('animationend', () => {
+    const btn = p.querySelector('.btn, [role="button"], a, input, textarea, select');
+    if (btn) {
+      try { btn.focus({ preventScroll: true }); } catch (e) { /* ignore */ }
+    }
+  });
+});
+
+// Wire up UI buttons if present
+if (openBtn) openBtn.addEventListener('click', startExperience);
+if (playToggleBtn) playToggleBtn.addEventListener('click', togglePlay);
+if (overlay && overlayPlayBtn) overlayPlayBtn.addEventListener('click', overlayPlay);
+
+// Optional: allow clicking overlay background to try play once
+if (overlay) {
+  overlay.addEventListener('click', (ev) => {
+    // only proceed if user clicked the overlay itself, not a child button
+    if (ev.target === overlay) overlayPlay();
+  });
+    }
   </script>
 </body>
   </html>
